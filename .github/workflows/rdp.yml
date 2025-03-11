@@ -1,0 +1,22 @@
+name: Windows RDP Setup
+
+on: 
+  workflow_dispatch
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Enable RDP
+      run: |
+        net user Administrator /active:yes
+        net user Administrator YourPassword123
+        netsh advfirewall firewall set rule group="remote desktop" new enable=Yes
+        Enable-PSRemoting -Force
+      shell: powershell
+      
+    - name: Start RDP Server
+      run: |
+        Write-Host "RDP is now enabled."
+      shell: cmd
